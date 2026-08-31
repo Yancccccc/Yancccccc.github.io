@@ -12,6 +12,7 @@ Render each Mesh with the same camera path, crop, background, resolution, frame 
 - `static/video/sacc_{gt,1p5k,30k}.webp`
 
 The comparison slider reveals Ground Truth on the left and either the 1.5k or 30k result on the right.
+All previews use the same neutral gray material. The default 24-frame animation uses 180 ms per frame, giving a full rotation of approximately 4.3 seconds.
 
 ## Edit project information
 

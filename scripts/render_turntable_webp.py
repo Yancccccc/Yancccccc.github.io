@@ -129,10 +129,10 @@ def render_mesh(
     normals = normals @ basis
     normal_length = np.linalg.norm(normals, axis=1, keepdims=True)
     normals = normals / np.maximum(normal_length, 1.0e-8)
-    base = colors.astype(np.float32)
-    gray_mesh = np.mean(np.max(base, axis=0) - np.min(base, axis=0)) < 18
-    if gray_mesh:
-        base[:] = np.array([198.0, 202.0, 207.0], dtype=np.float32)
+    # Use one neutral material for GT, 1.5k, and 30k so that the comparison
+    # reflects geometry rather than differences in vertex color.
+    base = np.empty((len(vertices), 3), dtype=np.float32)
+    base[:] = np.array([202.0, 204.0, 208.0], dtype=np.float32)
 
     margin = 0.90 * (size / 2.0) / radius
     light = np.array([0.35, 0.45, 0.82], dtype=np.float32)
@@ -160,7 +160,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--frames", type=int, default=24)
     parser.add_argument("--size", type=int, default=480)
-    parser.add_argument("--duration", type=int, default=90, help="Frame duration in milliseconds")
+    parser.add_argument("--duration", type=int, default=180, help="Frame duration in milliseconds")
     parser.add_argument("--quality", type=int, default=82)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)

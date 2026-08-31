@@ -13,6 +13,7 @@
       content="Reliable depth validation, structured 2D Gaussian initialization, and conflict-aware surface optimization."
     />
     <title>Multi-View Spacecraft Surface Reconstruction</title>
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet" />
     <link rel="stylesheet" href="static/css/index.css" />
   </head>
   <body>
@@ -34,7 +35,7 @@
         <p class="affiliation">University of Electronic Science and Technology of China</p>
         <div class="hero-actions">
           <a class="button primary" href="#method">Method Overview</a>
-          <a class="button" href="https://github.com/Yancccccc/spacecraft-depth-reconstruction" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="button" href="https://github.com/Yancccccc/Multi-view-spacecraft-reconstruction/tree/main" target="_blank" rel="noreferrer">Code</a>
           <span class="button muted" aria-disabled="true">Paper · Coming soon</span>
         </div>
         <div class="metric-grid" aria-label="Main results on MVSPAD">
@@ -100,43 +101,6 @@
           <figcaption>Overall framework: multi-view depth validation, structured 2D Gaussian initialization, and conflict-aware surface optimization.</figcaption>
         </figure>
 
-        <div class="method-flow">
-          <article class="method-card orange">
-            <div class="module-tag">M1</div>
-            <h3>Multi-View Depth Validation</h3>
-            <p>Sample local hypotheses along reference rays and test them using depth consistency, effective support, and viewing directions.</p>
-            <div class="method-visual validation" aria-hidden="true">
-              <i></i><i></i><i></i><i></i><i></i>
-              <b></b><b></b>
-            </div>
-            <strong class="module-output">Output: validated surface seeds</strong>
-          </article>
-
-          <div class="flow-arrow" aria-hidden="true">→</div>
-
-          <article class="method-card blue">
-            <div class="module-tag">M2</div>
-            <h3>Structured 2D Gaussian Initialization</h3>
-            <p>Map seed position, normal, tangent scale, color, and confidence to surface-aligned 2D Gaussian parameters.</p>
-            <div class="method-visual gaussians" aria-hidden="true">
-              <i></i><i></i><i></i><i></i><i></i>
-            </div>
-            <strong class="module-output">Output: trainable surface primitives</strong>
-          </article>
-
-          <div class="flow-arrow" aria-hidden="true">→</div>
-
-          <article class="method-card green">
-            <div class="module-tag">M3</div>
-            <h3>Conflict-Aware Surface Optimization</h3>
-            <p>Retain compatible depth constraints, weaken conflicting observations, and refine the surface with RGB and multi-view geometry.</p>
-            <div class="method-visual reconcile" aria-hidden="true">
-              <i></i><i></i><i></i><i></i>
-              <b>✓</b><b>×</b>
-            </div>
-            <strong class="module-output">Output: optimized depth and mesh</strong>
-          </article>
-        </div>
       </section>
 
       <section id="results" class="paper-section section-shell">
@@ -144,21 +108,37 @@
           <span>03</span>
           <h2>Results</h2>
         </div>
-        <div class="result-grid">
-          <article class="result-card">
-            <p class="result-kicker">Per-view depth</p>
-            <h3>Cross-view correction</h3>
-            <p>Validated surface evidence reduces local inconsistency near weak textures, thin structures, and depth discontinuities.</p>
+        <div class="result-stack">
+          <article class="result-panel">
+            <div class="result-panel-heading">
+              <p class="result-kicker">Per-view depth recovery</p>
+              <h3>Quantitative and qualitative comparison</h3>
+              <p>The proposed method reduces local cross-view depth inconsistency near weak textures, thin structures, and depth discontinuities.</p>
+            </div>
+            <figure class="result-table-figure">
+              <img src="static/images/table-depth.png" alt="Per-view depth recovery results on five spacecraft scenes" />
+              <figcaption>Per-view depth recovery results. MAE and RMSE are reported in millimeters.</figcaption>
+            </figure>
+            <figure class="result-qualitative-figure">
+              <img src="static/images/depth-qualitative.png" alt="Qualitative comparison of per-view depth recovery on five spacecraft scenes" />
+              <figcaption>Qualitative comparison of per-view depth recovery.</figcaption>
+            </figure>
           </article>
-          <article class="result-card">
-            <p class="result-kicker">Surface reconstruction</p>
-            <h3>Cleaner shared geometry</h3>
-            <p>Structured initialization and selective depth constraints reduce floating points, duplicated surfaces, and local thickening.</p>
-          </article>
-          <article class="result-card accent">
-            <p class="result-kicker">Fast configuration</p>
-            <h3>1.5k iterations · 65.33 s</h3>
-            <p>The fast setting provides a 7.15× end-to-end speedup over PGSR-30k while retaining a lower Chamfer-L1.</p>
+
+          <article class="result-panel">
+            <div class="result-panel-heading">
+              <p class="result-kicker">Surface reconstruction</p>
+              <h3>Chamfer-L1 and reconstructed surfaces</h3>
+              <p>Structured initialization and selective depth constraints reduce floating points, duplicated surfaces, and local thickening.</p>
+            </div>
+            <figure class="result-table-figure">
+              <img src="static/images/table-surface.png" alt="Chamfer-L1 comparison on five spacecraft scenes" />
+              <figcaption>Surface reconstruction comparison. Chamfer-L1 is reported in millimeters.</figcaption>
+            </figure>
+            <figure class="result-qualitative-figure">
+              <img src="static/images/surface-qualitative.png" alt="Qualitative comparison of spacecraft surface reconstruction" />
+              <figcaption>Qualitative comparison of reconstructed spacecraft surfaces.</figcaption>
+            </figure>
           </article>
         </div>
       </section>
