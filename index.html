@@ -20,10 +20,10 @@
     <header class="site-header">
       <a class="brand" href="#top">MV Spacecraft Reconstruction</a>
       <nav aria-label="Primary navigation">
+        <a href="#comparison">3D Comparison</a>
         <a href="#abstract">Abstract</a>
         <a href="#method">Method</a>
         <a href="#results">Results</a>
-        <a href="#comparison">3D Comparison</a>
       </nav>
     </header>
 
@@ -40,8 +40,8 @@
         </div>
         <div class="metric-grid" aria-label="Main results on MVSPAD">
           <article class="metric-card">
-            <span>Depth MAE</span>
-            <strong>3.632 <small>mm</small></strong>
+            <span>End-to-End Time</span>
+            <strong>65.33 <small>s</small></strong>
           </article>
           <article class="metric-card">
             <span>Depth RMSE</span>
@@ -56,7 +56,7 @@
 
       <section id="abstract" class="paper-section section-shell narrow">
         <div class="section-heading">
-          <span>01</span>
+          <span>02</span>
           <h2>Abstract</h2>
         </div>
         <p class="abstract-copy">
@@ -79,7 +79,7 @@
 
       <section id="method" class="paper-section section-shell">
         <div class="section-heading">
-          <span>02</span>
+          <span>03</span>
           <h2>Method</h2>
         </div>
         <p class="section-intro">
@@ -92,12 +92,7 @@
           <img
             src="static/images/overview.png"
             alt="Overall framework of the proposed method"
-            onerror="this.hidden=true; this.nextElementSibling.hidden=false"
           />
-          <div class="pipeline-placeholder" hidden>
-            <strong>Overall pipeline figure</strong>
-            <span>Place your final workflow image at <code>static/images/overview.png</code>.</span>
-          </div>
           <figcaption>Overall framework: multi-view depth validation, structured 2D Gaussian initialization, and conflict-aware surface optimization.</figcaption>
         </figure>
 
@@ -105,20 +100,16 @@
 
       <section id="results" class="paper-section section-shell">
         <div class="section-heading">
-          <span>03</span>
+          <span>04</span>
           <h2>Results</h2>
         </div>
         <div class="result-stack">
           <article class="result-panel">
             <div class="result-panel-heading">
               <p class="result-kicker">Per-view depth recovery</p>
-              <h3>Quantitative and qualitative comparison</h3>
+              <h3>Qualitative comparison</h3>
               <p>The proposed method reduces local cross-view depth inconsistency near weak textures, thin structures, and depth discontinuities.</p>
             </div>
-            <figure class="result-table-figure">
-              <img src="static/images/table-depth.png" alt="Per-view depth recovery results on five spacecraft scenes" />
-              <figcaption>Per-view depth recovery results. MAE and RMSE are reported in millimeters.</figcaption>
-            </figure>
             <figure class="result-qualitative-figure">
               <img src="static/images/depth-qualitative.png" alt="Qualitative comparison of per-view depth recovery on five spacecraft scenes" />
               <figcaption>Qualitative comparison of per-view depth recovery.</figcaption>
@@ -128,13 +119,9 @@
           <article class="result-panel">
             <div class="result-panel-heading">
               <p class="result-kicker">Surface reconstruction</p>
-              <h3>Chamfer-L1 and reconstructed surfaces</h3>
+              <h3>Qualitative comparison</h3>
               <p>Structured initialization and selective depth constraints reduce floating points, duplicated surfaces, and local thickening.</p>
             </div>
-            <figure class="result-table-figure">
-              <img src="static/images/table-surface.png" alt="Chamfer-L1 comparison on five spacecraft scenes" />
-              <figcaption>Surface reconstruction comparison. Chamfer-L1 is reported in millimeters.</figcaption>
-            </figure>
             <figure class="result-qualitative-figure">
               <img src="static/images/surface-qualitative.png" alt="Qualitative comparison of spacecraft surface reconstruction" />
               <figcaption>Qualitative comparison of reconstructed spacecraft surfaces.</figcaption>
@@ -145,7 +132,7 @@
 
       <section id="comparison" class="paper-section comparison-section section-shell">
         <div class="section-heading">
-          <span>04</span>
+          <span>01</span>
           <h2>Interactive 3D Comparison</h2>
         </div>
         <p class="section-intro">
