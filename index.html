@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Project page for multi-view geometry-guided self-supervised spacecraft depth refinement and surface reconstruction."
+    />
+    <meta property="og:title" content="Multi-View Spacecraft Surface Reconstruction" />
+    <meta
+      property="og:description"
+      content="Reliable depth validation, structured 2D Gaussian initialization, and conflict-aware surface optimization."
+    />
+    <title>Multi-View Spacecraft Surface Reconstruction</title>
+    <link rel="stylesheet" href="static/css/index.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top">MV Spacecraft Reconstruction</a>
+      <nav aria-label="Primary navigation">
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#comparison">3D Comparison</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-shell">
+        <p class="eyebrow">Research Project</p>
+        <h1>Multi-View Geometry-Guided Self-Supervised Spacecraft Depth Refinement and Surface Reconstruction</h1>
+        <p class="authors">Yanchuan et al.</p>
+        <p class="affiliation">University of Electronic Science and Technology of China</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#method">Method Overview</a>
+          <a class="button" href="https://github.com/Yancccccc/spacecraft-depth-reconstruction" target="_blank" rel="noreferrer">GitHub</a>
+          <span class="button muted" aria-disabled="true">Paper · Coming soon</span>
+        </div>
+        <div class="metric-grid" aria-label="Main results on MVSPAD">
+          <article class="metric-card">
+            <span>Depth MAE</span>
+            <strong>3.632 <small>mm</small></strong>
+          </article>
+          <article class="metric-card">
+            <span>Depth RMSE</span>
+            <strong>14.769 <small>mm</small></strong>
+          </article>
+          <article class="metric-card">
+            <span>Mesh Chamfer-L1</span>
+            <strong>1.849 <small>mm</small></strong>
+          </article>
+        </div>
+      </section>
+
+      <section id="abstract" class="paper-section section-shell narrow">
+        <div class="section-heading">
+          <span>01</span>
+          <h2>Abstract</h2>
+        </div>
+        <p class="abstract-copy">
+          Multi-view spacecraft reconstruction from images acquired around a target can provide important geometric
+          information for on-orbit inspection. Weakly textured regions, however, make cross-view matching unreliable and
+          can lead to incomplete surfaces. Per-view depth estimation and completion provide dense geometry, but local
+          inconsistencies may place the same surface at different 3D positions. We address this problem by validating
+          scale-aligned depth observations across views, transferring reliable local surface attributes to structured 2D
+          Gaussians, and reducing the influence of incompatible depth observations during self-supervised optimization.
+          Experiments on MVSPAD show improved cross-view depth consistency and surface reconstruction accuracy.
+        </p>
+      </section>
+
+      <section id="method" class="paper-section section-shell">
+        <div class="section-heading">
+          <span>02</span>
+          <h2>Method</h2>
+        </div>
+        <p class="section-intro">
+          The framework turns independently recovered per-view depth maps into a shared surface through three connected
+          stages. Reliable observations are retained, their local geometry is preserved, and inconsistent evidence is
+          weakened as the surface is optimized.
+        </p>
+
+        <div class="method-flow">
+          <article class="method-card orange">
+            <div class="module-tag">M1</div>
+            <h3>Multi-View Depth Validation</h3>
+            <p>Sample local hypotheses along reference rays and test them using depth consistency, effective support, and viewing directions.</p>
+            <div class="method-visual validation" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i>
+              <b></b><b></b>
+            </div>
+            <strong class="module-output">Output: validated surface seeds</strong>
+          </article>
+
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <article class="method-card blue">
+            <div class="module-tag">M2</div>
+            <h3>Structured 2D Gaussian Initialization</h3>
+            <p>Map seed position, normal, tangent scale, color, and confidence to surface-aligned 2D Gaussian parameters.</p>
+            <div class="method-visual gaussians" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <strong class="module-output">Output: trainable surface primitives</strong>
+          </article>
+
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <article class="method-card green">
+            <div class="module-tag">M3</div>
+            <h3>Conflict-Aware Surface Optimization</h3>
+            <p>Retain compatible depth constraints, weaken conflicting observations, and refine the surface with RGB and multi-view geometry.</p>
+            <div class="method-visual reconcile" aria-hidden="true">
+              <i></i><i></i><i></i><i></i>
+              <b>✓</b><b>×</b>
+            </div>
+            <strong class="module-output">Output: optimized depth and mesh</strong>
+          </article>
+        </div>
+      </section>
+
+      <section id="results" class="paper-section section-shell">
+        <div class="section-heading">
+          <span>03</span>
+          <h2>Results</h2>
+        </div>
+        <div class="result-grid">
+          <article class="result-card">
+            <p class="result-kicker">Per-view depth</p>
+            <h3>Cross-view correction</h3>
+            <p>Validated surface evidence reduces local inconsistency near weak textures, thin structures, and depth discontinuities.</p>
+          </article>
+          <article class="result-card">
+            <p class="result-kicker">Surface reconstruction</p>
+            <h3>Cleaner shared geometry</h3>
+            <p>Structured initialization and selective depth constraints reduce floating points, duplicated surfaces, and local thickening.</p>
+          </article>
+          <article class="result-card accent">
+            <p class="result-kicker">Fast configuration</p>
+            <h3>1.5k iterations · 65.33 s</h3>
+            <p>The fast setting provides a 7.15× end-to-end speedup over PGSR-30k while retaining a lower Chamfer-L1.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="comparison" class="paper-section comparison-section section-shell">
+        <div class="section-heading">
+          <span>04</span>
+          <h2>Interactive 3D Comparison</h2>
+        </div>
+        <p class="section-intro">
+          Drag the divider to compare the reference and reconstructed meshes. Both sides share one camera and one rotation,
+          so the viewpoint remains exactly synchronized.
+        </p>
+
+        <div class="viewer-card">
+          <div id="mesh-viewer" class="mesh-viewer" data-split="50">
+            <canvas id="mesh-canvas" aria-label="Interactive synchronized GT and Ours mesh comparison"></canvas>
+            <div class="viewer-label left">Ground Truth</div>
+            <div class="viewer-label right">Ours</div>
+            <div id="viewer-divider" class="viewer-divider" role="slider" aria-label="Comparison divider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
+              <span>↔</span>
+            </div>
+            <div id="viewer-status" class="viewer-status">Loading demo PLY meshes…</div>
+          </div>
+          <div class="viewer-toolbar">
+            <button id="toggle-rotation" type="button">Pause rotation</button>
+            <button id="reset-camera" type="button">Reset camera</button>
+            <span>Drag to orbit · Scroll to zoom</span>
+          </div>
+        </div>
+
+        <aside class="asset-note">
+          <strong>Replace the demo meshes:</strong>
+          put aligned mesh files at <code>static/models/gt.ply</code> and <code>static/models/ours.ply</code>.
+          Both files must use the same coordinate system and scale. Standard mesh/point-cloud PLY is supported; Gaussian-splat PLY requires a dedicated splat renderer.
+        </aside>
+      </section>
+
+      <section class="paper-section section-shell narrow">
+        <div class="section-heading">
+          <span>05</span>
+          <h2>BibTeX</h2>
+        </div>
+        <pre class="bibtex"><code>@article{yanchuan2026spacecraft,
+  title   = {Multi-View Geometry-Guided Self-Supervised Spacecraft Depth Refinement and Surface Reconstruction},
+  author  = {Yanchuan and others},
+  journal = {Under Review},
+  year    = {2026}
+}</code></pre>
+      </section>
+    </main>
+
+    <footer>
+      <p>Academic project page · Built for reproducible 3D comparison</p>
+    </footer>
+
+    <script type="module" src="static/js/viewer.js"></script>
+  </body>
+</html>
