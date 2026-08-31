@@ -14,14 +14,6 @@
     />
     <title>Multi-View Spacecraft Surface Reconstruction</title>
     <link rel="stylesheet" href="static/css/index.css" />
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/"
-        }
-      }
-    </script>
   </head>
   <body>
     <header class="site-header">
@@ -80,7 +72,7 @@
           then evaluates the compatibility of per-view depth observations: reliable constraints are retained, while
           incompatible observations are weakened. On MVSPAD, the proposed method achieves average depth MAE, RMSE, and
           Mesh Chamfer-L1 values of 3.632, 14.769, and 1.849 mm. Compared with 2DGS, MAE and Chamfer-L1 are reduced by
-          65.7\% and 60.5\%, respectively.
+          65.7% and 60.5%, respectively.
         </p>
       </section>
 
@@ -177,38 +169,87 @@
           <h2>Interactive 3D Comparison</h2>
         </div>
         <p class="section-intro">
-          Compare the Ground Truth mesh with the fast 1.5k or sufficiently optimized 30k reconstruction. Both sides share
-          one camera and one rotation, so the viewpoint remains exactly synchronized.
+          Visual comparisons follow the PAHC-3DGS project-page layout. Four spacecraft are presented in one row. Drag the
+          divider in each card to compare Ground Truth against the 1.5k or 30k reconstruction rendered with the same
+          turntable trajectory.
         </p>
 
         <div class="comparison-tabs" role="group" aria-label="Reconstruction iteration budget">
-          <span>Right-hand result</span>
-          <button class="variant-button is-active" type="button" data-variant="1p5k">Ours · 1.5k</button>
-          <button class="variant-button" type="button" data-variant="30k">Ours · 30k</button>
+          <span>Compare Ground Truth with</span>
+          <button class="variant-button is-active" type="button" data-budget="1p5k">Ours · 1.5k</button>
+          <button class="variant-button" type="button" data-budget="30k">Ours · 30k</button>
         </div>
 
-        <div class="viewer-card">
-          <div id="mesh-viewer" class="mesh-viewer" data-split="50">
-            <canvas id="mesh-canvas" aria-label="Interactive synchronized GT and Ours mesh comparison"></canvas>
-            <div class="viewer-label left">Ground Truth</div>
-            <div id="ours-label" class="viewer-label right">Ours · 1.5k</div>
-            <div id="viewer-divider" class="viewer-divider" role="slider" aria-label="Comparison divider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
-              <span>↔</span>
+        <div class="visual-grid" aria-label="Four-spacecraft visual comparisons">
+          <article class="visual-card" data-scene="acrimsat">
+            <h3>ACRIMSAT</h3>
+            <div class="visual-stage">
+              <div class="visual-side visual-left">
+                <img class="visual-image visual-gt" src="static/video/acrimsat_gt.webp" alt="ACRIMSAT Ground Truth rotating mesh" />
+                <span class="missing-asset">ACRIMSAT GT</span>
+              </div>
+              <div class="visual-side visual-right">
+                <img class="visual-image visual-result" src="static/video/acrimsat_1p5k.webp" alt="ACRIMSAT 1.5k rotating mesh" />
+                <span class="missing-asset">ACRIMSAT 1.5k</span>
+              </div>
+              <div class="visual-divider" role="slider" aria-label="ACRIMSAT comparison divider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0"><span>↔</span></div>
             </div>
-            <div id="viewer-status" class="viewer-status">Loading demo PLY meshes…</div>
-          </div>
-          <div class="viewer-toolbar">
-            <button id="toggle-rotation" type="button">Pause rotation</button>
-            <button id="reset-camera" type="button">Reset camera</button>
-            <span>Drag to orbit · Scroll to zoom</span>
-          </div>
+            <div class="visual-labels"><span>Ground Truth</span><span class="result-label">Ours · 1.5k</span></div>
+          </article>
+
+          <article class="visual-card" data-scene="desdyni">
+            <h3>DESDynI</h3>
+            <div class="visual-stage">
+              <div class="visual-side visual-left">
+                <img class="visual-image visual-gt" src="static/video/desdyni_gt.webp" alt="DESDynI Ground Truth rotating mesh" />
+                <span class="missing-asset">DESDynI GT</span>
+              </div>
+              <div class="visual-side visual-right">
+                <img class="visual-image visual-result" src="static/video/desdyni_1p5k.webp" alt="DESDynI 1.5k rotating mesh" />
+                <span class="missing-asset">DESDynI 1.5k</span>
+              </div>
+              <div class="visual-divider" role="slider" aria-label="DESDynI comparison divider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0"><span>↔</span></div>
+            </div>
+            <div class="visual-labels"><span>Ground Truth</span><span class="result-label">Ours · 1.5k</span></div>
+          </article>
+
+          <article class="visual-card" data-scene="hinode">
+            <h3>HINODE</h3>
+            <div class="visual-stage">
+              <div class="visual-side visual-left">
+                <img class="visual-image visual-gt" src="static/video/hinode_gt.webp" alt="HINODE Ground Truth rotating mesh" />
+                <span class="missing-asset">HINODE GT</span>
+              </div>
+              <div class="visual-side visual-right">
+                <img class="visual-image visual-result" src="static/video/hinode_1p5k.webp" alt="HINODE 1.5k rotating mesh" />
+                <span class="missing-asset">HINODE 1.5k</span>
+              </div>
+              <div class="visual-divider" role="slider" aria-label="HINODE comparison divider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0"><span>↔</span></div>
+            </div>
+            <div class="visual-labels"><span>Ground Truth</span><span class="result-label">Ours · 1.5k</span></div>
+          </article>
+
+          <article class="visual-card" data-scene="sacc">
+            <h3>SAC-C</h3>
+            <div class="visual-stage">
+              <div class="visual-side visual-left">
+                <img class="visual-image visual-gt" src="static/video/sacc_gt.webp" alt="SAC-C Ground Truth rotating mesh" />
+                <span class="missing-asset">SAC-C GT</span>
+              </div>
+              <div class="visual-side visual-right">
+                <img class="visual-image visual-result" src="static/video/sacc_1p5k.webp" alt="SAC-C 1.5k rotating mesh" />
+                <span class="missing-asset">SAC-C 1.5k</span>
+              </div>
+              <div class="visual-divider" role="slider" aria-label="SAC-C comparison divider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0"><span>↔</span></div>
+            </div>
+            <div class="visual-labels"><span>Ground Truth</span><span class="result-label">Ours · 1.5k</span></div>
+          </article>
         </div>
 
         <aside class="asset-note">
-          <strong>Replace the demo meshes:</strong>
-          put aligned mesh files at <code>static/models/gt.ply</code>, <code>static/models/ours_1p5k.ply</code>, and
-          <code>static/models/ours_30k.ply</code>.
-          Both files must use the same coordinate system and scale. Standard mesh/point-cloud PLY is supported; Gaussian-splat PLY requires a dedicated splat renderer.
+          <strong>Turntable assets:</strong> each Ground Truth, 1.5k, and 30k Mesh is rendered with an identical camera,
+          crop, background, resolution, frame count, and rotation direction. This prevents the incomplete framing seen in
+          the earlier browser-side PLY viewer.
         </aside>
       </section>
 
@@ -230,6 +271,6 @@
       <p>Academic project page · Built for reproducible 3D comparison</p>
     </footer>
 
-    <script type="module" src="static/js/viewer.js"></script>
+    <script src="static/js/comparison.js"></script>
   </body>
 </html>

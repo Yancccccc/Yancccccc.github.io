@@ -1,16 +1,17 @@
 # Multi-View Spacecraft Surface Reconstruction — Project Page
 
-Static academic project page with a synchronized, draggable Ground Truth/Ours PLY comparison.
+Static academic project page with four synchronized Ground Truth/Ours turntable comparisons in one row, following the PAHC-3DGS visual-comparison style.
 
-## Replace the demo models
+## Add the visual-comparison assets
 
-Copy aligned PLY files to:
+Render each Mesh with the same camera path, crop, background, resolution, frame count, and rotation direction, then save animated WebP files as:
 
-- `static/models/gt.ply`
-- `static/models/ours_1p5k.ply`
-- `static/models/ours_30k.ply`
+- `static/video/acrimsat_{gt,1p5k,30k}.webp`
+- `static/video/desdyni_{gt,1p5k,30k}.webp`
+- `static/video/hinode_{gt,1p5k,30k}.webp`
+- `static/video/sacc_{gt,1p5k,30k}.webp`
 
-The two models must use the same coordinate system and scale. The viewer supports standard triangle-mesh and point-cloud PLY files. A 3D Gaussian Splatting PLY requires a specialized splat renderer and cannot be displayed correctly by the standard PLY viewer.
+The comparison slider reveals Ground Truth on the left and either the 1.5k or 30k result on the right.
 
 ## Edit project information
 
