@@ -67,13 +67,20 @@
           <h2>Abstract</h2>
         </div>
         <p class="abstract-copy">
-          Multi-view spacecraft reconstruction from images acquired around a target can provide important geometric
-          information for on-orbit inspection. Weakly textured regions, however, make cross-view matching unreliable and
-          can lead to incomplete surfaces. Per-view depth estimation and completion provide dense geometry, but local
-          inconsistencies may place the same surface at different 3D positions. We address this problem by validating
-          scale-aligned depth observations across views, transferring reliable local surface attributes to structured 2D
-          Gaussians, and reducing the influence of incompatible depth observations during self-supervised optimization.
-          Experiments on MVSPAD show improved cross-view depth consistency and surface reconstruction accuracy.
+          Reconstructing non-cooperative spacecraft surfaces from close-range fly-around images provides geometry for
+          component inspection, relative navigation, and on-orbit servicing. However, weakly textured regions can make
+          cross-view matching unreliable, resulting in incomplete reconstructed surfaces. Monocular depth estimation and
+          completion provide dense geometry, but cross-view inconsistencies can misalign the reconstructed surface.
+          Therefore, directly fusing these depth maps may introduce outliers, duplicated surfaces, and local surface
+          thickening. To address these problems, we propose a multi-view geometry-guided self-supervised method for
+          spacecraft depth refinement and surface reconstruction. Candidate points are sampled along reference rays
+          around scale-aligned per-view depths, filtered using cross-view depth consistency, effective view support, and
+          viewing directions, and fused into surface seeds through voxel fusion. Their geometry, appearance, and
+          confidence are mapped to 2D Gaussian parameters for structured initialization. The current Gaussian surface
+          then evaluates the compatibility of per-view depth observations: reliable constraints are retained, while
+          incompatible observations are weakened. On MVSPAD, the proposed method achieves average depth MAE, RMSE, and
+          Mesh Chamfer-L1 values of 3.632, 14.769, and 1.849 mm. Compared with 2DGS, MAE and Chamfer-L1 are reduced by
+          65.7\% and 60.5\%, respectively.
         </p>
       </section>
 
@@ -87,6 +94,19 @@
           stages. Reliable observations are retained, their local geometry is preserved, and inconsistent evidence is
           weakened as the surface is optimized.
         </p>
+
+        <figure class="pipeline-figure">
+          <img
+            src="static/images/overview.png"
+            alt="Overall framework of the proposed method"
+            onerror="this.hidden=true; this.nextElementSibling.hidden=false"
+          />
+          <div class="pipeline-placeholder" hidden>
+            <strong>Overall pipeline figure</strong>
+            <span>Place your final workflow image at <code>static/images/overview.png</code>.</span>
+          </div>
+          <figcaption>Overall framework: multi-view depth validation, structured 2D Gaussian initialization, and conflict-aware surface optimization.</figcaption>
+        </figure>
 
         <div class="method-flow">
           <article class="method-card orange">
@@ -157,15 +177,21 @@
           <h2>Interactive 3D Comparison</h2>
         </div>
         <p class="section-intro">
-          Drag the divider to compare the reference and reconstructed meshes. Both sides share one camera and one rotation,
-          so the viewpoint remains exactly synchronized.
+          Compare the Ground Truth mesh with the fast 1.5k or sufficiently optimized 30k reconstruction. Both sides share
+          one camera and one rotation, so the viewpoint remains exactly synchronized.
         </p>
+
+        <div class="comparison-tabs" role="group" aria-label="Reconstruction iteration budget">
+          <span>Right-hand result</span>
+          <button class="variant-button is-active" type="button" data-variant="1p5k">Ours · 1.5k</button>
+          <button class="variant-button" type="button" data-variant="30k">Ours · 30k</button>
+        </div>
 
         <div class="viewer-card">
           <div id="mesh-viewer" class="mesh-viewer" data-split="50">
             <canvas id="mesh-canvas" aria-label="Interactive synchronized GT and Ours mesh comparison"></canvas>
             <div class="viewer-label left">Ground Truth</div>
-            <div class="viewer-label right">Ours</div>
+            <div id="ours-label" class="viewer-label right">Ours · 1.5k</div>
             <div id="viewer-divider" class="viewer-divider" role="slider" aria-label="Comparison divider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
               <span>↔</span>
             </div>
@@ -180,7 +206,8 @@
 
         <aside class="asset-note">
           <strong>Replace the demo meshes:</strong>
-          put aligned mesh files at <code>static/models/gt.ply</code> and <code>static/models/ours.ply</code>.
+          put aligned mesh files at <code>static/models/gt.ply</code>, <code>static/models/ours_1p5k.ply</code>, and
+          <code>static/models/ours_30k.ply</code>.
           Both files must use the same coordinate system and scale. Standard mesh/point-cloud PLY is supported; Gaussian-splat PLY requires a dedicated splat renderer.
         </aside>
       </section>
